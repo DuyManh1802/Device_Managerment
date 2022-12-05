@@ -12,7 +12,7 @@ class depot extends Model
     protected $fillable = [
         'name',
     ];
-    public function totaldevice(){
-        return $this->hasMany(totaldevice::class, 'depot_id', 'id');
+    public function device(){
+        return $this->hasMany(device::class, 'device_id', 'id');
     }
 }

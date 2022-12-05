@@ -11,10 +11,8 @@ class device extends Model
     protected $table = 'device';
     protected $fillable = [
         'category_id',
-        'supplier_id',
-        'status_id',
+        'depot_id',
         'name',
-        'price',
         'configuration',
         'image'
     ];
@@ -22,17 +20,19 @@ class device extends Model
     public function category(){
         return $this->belongsTo(category::class, 'category_id', 'id');
     }
-    public function status(){
-        return $this->belongsTo(status::class, 'status_id', 'id');
+    
+    public function depot(){
+        return $this->belongsTo(depot::class, 'depot_id', 'id');
     }
-    public function supplier(){
-        return $this->belongsTo(supplier::class, 'supplier_id', 'id');
+    public function devicedetail(){
+        return $this->hasMany(devicedetail::class, 'device_id', 'id');
     }
-    public function deviceused(){
-        return $this->hasMany(deviceused::class, 'device_id', 'id');
+    public function warranty(){
+        return $this->hasMany(warranty::class, 'device_id', 'id');
     }
-    public function totaldevice(){
-        return $this->hasMany(totaldevice::class, 'device_id', 'id');
+    
+    public function departments(){ 
+        return $this->belongsToMany(department::class , 'devicedetail' , 'device_id' , 'department_id');
     }
 
     public function imageUrl(){

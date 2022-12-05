@@ -13,7 +13,7 @@ class supplier extends Model
         'name',
     ];
 
-    public function device(){
-        return $this->hasMany(device::class, 'supplier_id', 'id');
+    public function warranty(){
+        return $this->hasMany(warranty::class, 'warranty_id', 'id');
     }
 }

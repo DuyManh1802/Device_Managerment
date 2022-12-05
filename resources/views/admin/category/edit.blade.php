@@ -1,8 +1,8 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="pd-20 card-box mb-30">
-    <h1 class="page-header">Category
-        <small>Edit</small>
+    <h1 class="page-header">Danh mục thiết bị
+        <small>Sửa</small>
     </h1>
     @if (count($errors))
         <div class="alert alert-danger">
@@ -23,11 +23,11 @@
             @csrf
             @method('put')
             <div class="form-group">
-                <label>Category Name</label>
+                <label>Tên danh mục</label>
                 <input class="form-control" name="name" value="{{ $categories->name }}"  />
             </div>
             
-            <button type="submit" class="btn btn-dark">Update</button>
+            <button type="submit" class="btn btn-dark">Cập nhật</button>
 
         <form>
     </div>

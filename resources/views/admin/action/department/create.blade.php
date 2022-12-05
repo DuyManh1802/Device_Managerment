@@ -1,8 +1,8 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="pd-20 card-box mb-30">
-    <h1 class="page-header">Department
-        <small>Create</small>
+    <h1 class="page-header">Phòng ban
+        <small>Thêm</small>
     </h1>
     @if (count($errors))
         <div class="alert alert-danger">
@@ -15,18 +15,18 @@
         <form action="{{ route("admin.action.department.store") }}" method="POST">
             @csrf
             <div class="form-group">
-                <label>Department Name</label>
-                <input class="form-control" name="name" placeholder="Please Enter department Name" />
+                <label>Tên phòng ban</label>
+                <input class="form-control" name="name" placeholder="Tên phòng ban" />
             </div>
             <div class="form-group">
-                <label>Department Manager</label>
-                <input class="form-control" name="manager" placeholder="Please Enter department Manager" />
+                <label>Người quản lý</label>
+                <input class="form-control" name="manager" placeholder="Người quản lý" />
             </div>
             <div class="form-group">
-                <label>Department Address</label>
-                <input class="form-control" name="address" placeholder="Please Enter department Address" />
+                <label>Địa chỉ phòng ban</label>
+                <input class="form-control" name="address" placeholder="Địa chỉ phòng ban" />
             </div>
-            <button type="submit" class="btn btn-dark">Create</button>
+            <button type="submit" class="btn btn-dark">Thêm</button>
 
         <form>
     </div>

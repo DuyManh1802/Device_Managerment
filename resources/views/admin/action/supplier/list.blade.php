@@ -1,8 +1,8 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="card-box mb-30">
-    <h1 class="page-header">Supplier
-        <small>List</small>
+    <h1 class="page-header">Nhà cung cấp
+        <small>Danh sách</small>
     </h1>
     @if (session('success'))
         <div class="alert alert-success">
@@ -13,10 +13,10 @@
             <thead>
                 <tr align="center">
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>Create</th>                   
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>Tên nhà cung cấp</th>
+                    <th>Thêm</th>                   
+                    <th>Sửa</th>
+                    <th>Xóa</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,9 +25,9 @@
                 <tr class="odd gradeX" align="center">
                     <td>{{ $supplier->id }}</td>
                     <td>{{ $supplier->name }}</td>                   
-                    <td class="center"><i class="icon-copy bi bi-plus-square"></i> <a href="{{ route('admin.action.supplier.delete', $supplier->id) }}"> Create</a></td>
-                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{{ route('admin.action.supplier.edit', $supplier->id) }}">Edit</a></td>
-                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{ route('admin.action.supplier.delete', $supplier->id) }}"> Delete</a></td>
+                    <td class="center"><i class="icon-copy bi bi-plus-square"></i> <a href="{{ route('admin.action.supplier.delete', $supplier->id) }}">Thêm</a></td>
+                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{{ route('admin.action.supplier.edit', $supplier->id) }}">Sửa</a></td>
+                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{ route('admin.action.supplier.delete', $supplier->id) }}"> Xóa</a></td>
                 </tr>
                 @endforeach
                 

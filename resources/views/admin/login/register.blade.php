@@ -3,7 +3,7 @@
 	<head>
 		<!-- Basic Page Info -->
 		<meta charset="utf-8" />
-		<title>Login</title>
+		<title>Register</title>
 
 		<!-- Site favicon -->
 		<link
@@ -42,6 +42,11 @@
 			type="text/css"
 			href="/template/vendors/styles/icon-font.min.css"
 		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/template/src/plugins/jquery-steps/jquery.steps.css"
+		/>
 		<link rel="stylesheet" type="text/css" href="/template/vendors/styles/style.css" />
 
 		<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -73,6 +78,7 @@
 		</script>
 		<!-- End Google Tag Manager -->
 	</head>
+
 	<body class="login-page">
 		<div class="login-header box-shadow">
 			<div
@@ -85,91 +91,82 @@
 				</div>
 				<div class="login-menu">
 					<ul>
-						<li><a href="{{ route('admin.showFormRegister') }}">Đăng ký</a></li>
+						<li><a href="{{ route('admin.login.index') }}">Đăng nhập</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		<div
-			class="login-wrap d-flex align-items-center flex-wrap justify-content-center"
+			class="register-page-wrap d-flex align-items-center flex-wrap justify-content-center"
 		>
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-md-6 col-lg-7">
-						<img src="/template/vendors/images/login-page-img.png" alt="" />
+						<img src="/template/vendors/images/register-page-img.png" alt="" />
 					</div>
 					<div class="col-md-6 col-lg-5">
-						<div class="login-box bg-white box-shadow border-radius-10">
-							<div class="login-title">
-								<h2 class="text-center text-primary">Đăng nhập BKAT</h2>
-								@if (session('success'))
-        							<div class="alert alert-success">
-            							{{ session('success') }}
-       								</div>
-    							@endif
-							</div>
-							
-							<form action="{{ route('admin.login.checkLogin') }}" method="POST">
-								@csrf
-								
-								<div class="input-group custom">
-									<input
-										type="text"
-										class="form-control form-control-lg"
-										placeholder="Username" name="email"
-									/>
-									<div class="input-group-append custom">
-										<span class="input-group-text"
-											><i class="icon-copy dw dw-user1"></i
-										></span>
-									</div>
-								</div>
-								<div class="input-group custom">
-									<input
-										type="password"
-										class="form-control form-control-lg"
-										placeholder="**********" name="password"
-									/>
-									<div class="input-group-append custom">
-										<span class="input-group-text"
-											><i class="dw dw-padlock1"></i
-										></span>
-									</div>
-								</div>
-								<div class="row pb-30">
-									<div class="col-6">
-										<div class="custom-control custom-checkbox">
-											<input
-												type="checkbox"
-												class="custom-control-input"
-												id="customCheck1"
-											/>
-											<label class="custom-control-label" for="customCheck1"
-												>Nhớ tài khoản</label
-											>
+						<div class="register-box bg-white box-shadow border-radius-10">
+							<div class="wizard-content">
+                                @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                @if (count($errors))
+                                    <div class="alert alert-danger">
+                                        @foreach($errors->all() as $err)
+                                            {{ $err }}
+                                        @endforeach
+                                    </div>
+                                @endif
+								<form action="{{ route('admin.register') }}" class="tab-wizard2 wizard-circle wizard" method="POST">
+                                    @csrf
+                                    
+									<section>
+										<div class="form-wrap max-width-600 mx-auto">
+                                            <div class="form-group row">
+												<label class="col-sm-4 col-form-label">Tên*</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control" name="name" placeholder="Tên"/>
+												</div>
+											</div>
+
+											<div class="form-group row">
+												<label class="col-sm-4 col-form-label">Email*</label>
+												<div class="col-sm-8">
+													<input type="email" class="form-control" name="email" placeholder="Email"/>
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<label class="col-sm-4 col-form-label">Mật khẩu*</label>
+												<div class="col-sm-8">
+													<input type="password" class="form-control" name="password" placeholder="******"/>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-sm-4 col-form-label"
+													>Xác nhận mật khẩu*</label
+												>
+												<div class="col-sm-8">
+													<input type="password" class="form-control" name="confirm" placeholder="******"/>
+												</div>
+											</div>
 										</div>
-									</div>
-									<div class="col-6">
-										<div class="forgot-password">
-											<a href="/template/forgot-password.html">Quên mật khẩu?</a>
+                                        <div class="input-group mb-0">
+											<button type="submit" class="btn btn-primary btn-lg btn-block">Đăng ký</button>
 										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-12">
-										<div class="input-group mb-0">
-											<button type="submit" class="btn btn-primary btn-lg btn-block">Đăng nhập</button>
-										</div>
-										
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- welcome modal start -->
+									</section>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+		
 		
 		<!-- welcome modal end -->
 		<!-- js -->
@@ -177,6 +174,8 @@
 		<script src="/template/vendors/scripts/script.min.js"></script>
 		<script src="/template/vendors/scripts/process.js"></script>
 		<script src="/template/vendors/scripts/layout-settings.js"></script>
+		<script src="/template/src/plugins/jquery-steps/jquery.steps.js"></script>
+		<script src="/template/vendors/scripts/steps-setting.js"></script>
 		<!-- Google Tag Manager (noscript) -->
 		<noscript
 			><iframe

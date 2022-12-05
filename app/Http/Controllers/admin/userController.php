@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Hash;
 
 class userController extends Controller
 {
@@ -53,10 +53,9 @@ class userController extends Controller
         if($request->password ){
             $this->validate($request,
             [
-                'password' => 'min:6|max:32|required_with:confirm',
-                'confirm' => 'min:6|max:32|same:password'
+                'password' => 'min:6|max:32|confirmed', 
             ]);
-            $data['password'] = bcrypt($request->password);
+            $data['password'] = Hash::make($request->password);
         }
 
         $users->update($data);

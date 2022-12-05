@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class deviceused extends Model
+class warranty extends Model
 {
     use HasFactory;
-    protected $table = 'deviceused';
+    protected $table = 'totaldevice';
     protected $fillable = [
-        'department_id',
         'device_id',
-        'amount_used',
+        'supplier_id',
+        'warranty_status',
     ];
-    public function department(){
-        return $this->belongsTo(department::class, 'department_id', 'id');
-    }
     public function device(){
         return $this->belongsTo(device::class, 'device_id', 'id');
+    }
+    public function supplier(){
+        return $this->belongsTo(supplier::class, 'supplier_id', 'id');
     }
 }

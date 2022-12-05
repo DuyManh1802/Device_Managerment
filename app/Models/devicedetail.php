@@ -5,18 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class totaldevice extends Model
+class devicedetail extends Model
 {
     use HasFactory;
-    protected $table = 'totaldevice';
+    protected $table = 'devicedetail';
     protected $fillable = [
+        'department_id',
         'device_id',
-        'depot_id',
-        'total_device',
-        'warranty_period',
+        'department_used',
+        'amount_used',
+        'status'
     ];
-    public function depot(){
-        return $this->belongsTo(depot::class, 'depot_id', 'id');
+    public $timestamps = false;
+    public function department(){
+        return $this->belongsTo(department::class, 'department_id', 'id');
     }
     public function device(){
         return $this->belongsTo(device::class, 'device_id', 'id');

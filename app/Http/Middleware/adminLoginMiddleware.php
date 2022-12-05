@@ -19,7 +19,7 @@ class adminLoginMiddleware
     public function handle(Request $request, Closure $next)
     {
         if(Auth::check()){
-            if(Auth::user()->is_admin){
+            if(Auth::user()->is_admin ){
                 return $next($request);
             }
             return redirect()->route('admin.login.index')->with('error', 'Permission denied');

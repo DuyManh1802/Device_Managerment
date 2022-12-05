@@ -15,7 +15,12 @@ class department extends Model
         'address',
     ];
 
-    public function deviceused(){
-        return $this->hasMany(deviceused::class, 'department_id', 'id');
+    public function devicedetail(){
+        return $this->hasMany(devicedetail::class, 'devicedetail_id', 'id');
     }
+
+    public function devices(){ 
+        return $this->belongsToMany(device::class , 'devicedetail' , 'department_id' , 'device_id');
+    }
+    
 }

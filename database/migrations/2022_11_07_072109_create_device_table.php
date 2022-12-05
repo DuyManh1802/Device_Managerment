@@ -16,16 +16,13 @@ class CreateDeviceTable extends Migration
         Schema::create('device', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('status_id');
-            $table->unsignedBigInteger('supplier_id');
+            $table->unsignedBigInteger('depot_id');
             $table->string('name');
-            $table->float('price');
             $table->string('configuration')->nullable();
             $table->string('image');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('category')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign('status_id')->references('id')->on('status')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign('supplier_id')->references('id')->on('supplier')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('depot_id')->references('id')->on('depot')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

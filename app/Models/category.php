@@ -12,8 +12,9 @@ class category extends Model
 
     protected $fillable = [
         'name',
+        // 'slug'
     ];
     public function device(){
-        return $this->hasMany(device::class, 'category_id', 'id');
+        return $this->hasMany(device::class, 'device_id', 'id');
     }
 }

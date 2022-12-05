@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeviceusedTable extends Migration
+class CreateDevicedetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateDeviceusedTable extends Migration
      */
     public function up()
     {
-        Schema::create('deviceused', function (Blueprint $table) {
+        Schema::create('devicedetail', function (Blueprint $table) {
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('device_id');
-            $table->integer('amount_used')->default(0);
-            $table->timestamps();
-            $table->primary(['department_id', 'device_id']);
+            $table->string('department_used')->nullable();
+            $table->string('amount_used')->nullable();
+            $table->string('status')->nullable();
+            // $table->primary(['department_id', 'device_id']);
             $table->foreign('department_id')->references('id')->on('department')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('device_id')->references('id')->on('device')->cascadeOnDelete()->cascadeOnUpdate();
         });
@@ -31,6 +32,6 @@ class CreateDeviceusedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deviceused');
+        Schema::dropIfExists('devicedetail');
     }
 }

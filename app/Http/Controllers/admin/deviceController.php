@@ -6,34 +6,36 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\device;
 use App\Models\category;
-use App\Models\supplier;
+use App\Models\depot;
 use App\Models\status;
 use Nette\Utils\Random;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\DB;
 
 class deviceController extends Controller
 {
-    public function index(){
-        $devices = device::paginate(20);
+    public function index(Request $request){
+        $query = device::orderBy('id', 'desc');
+        if ($request->has('cate')) {
+            $query->where('category_id', $request->cate);
+        }
+        $devices = $query->paginate(20);
+       
         return view('admin.device.list', compact('devices'));
     }
     public function create(){
         $categories = category::all();
-        $suppliers = supplier::all();
-        // $statuss = status::all();
-        return view('admin.device.create', compact('categories', 'suppliers'));
+        $depots = depot::all();
+        return view('admin.device.create', compact('categories', 'depots'));
     }
     public function store(Request $request){
         $this->validate($request,
             [
                 'category_id' =>'required',
-                'supplier_id' =>'required',
+                'depot_id' =>'required',
                 'name' =>'required',
                 'image' =>'required',
-                'price' =>'required',
                 'configuration' =>'required',
-                // 'status_id' =>'required'
             ]
             );
             if($request->hasFile('image')){
@@ -53,12 +55,10 @@ class deviceController extends Controller
 
             device::create([
                 'category_id'=>$request->category_id,
-                'supplier_id'=>$request->supplier_id,
+                'depot_id'=>$request->depot_id,
                 'name'=>$request->name,
                 'image'=>$image,
-                'price'=>$request->price,
                 'configuration'=>$request->configuration,
-                'status_id'=>$request->status_id
 
             ]);
         return redirect()->route('admin.device.index')->with('success', 'Created successfully!' );
@@ -67,17 +67,16 @@ class deviceController extends Controller
     public function edit($id){
         $devices = device::find($id);
         $categories = category::all();
-        $suppliers = supplier::all();
-        return view('admin.device.edit', compact('devices', 'categories', 'suppliers'));
+        $depots = depot::all();
+        return view('admin.device.edit', compact('devices', 'categories', 'depots'));
     }
     public function update(Request $request, $id){
         $this->validate($request,
             [
                 'category_id' =>'required',
-                'supplier_id' =>'required',
+                'depot_id' =>'required',
                 'name' =>'required',
                 'image' =>'required',
-                'price' =>'required',
                 'configuration' =>'required',
             ]
             );
@@ -99,12 +98,10 @@ class deviceController extends Controller
             $devices = device::find($id);
             $devices->update([
                 'category_id'=>$request->category_id,
-                'supplier_id'=>$request->supplier_id,
+                'depot_id'=>$request->depot_id,
                 'name'=>$request->name,
                 'image'=> isset($image) ? $image : $devices->image,
-                'price'=>$request->price,
                 'configuration'=>$request->configuration,
-                'status_id'=>$request->status_id
             ]);
             
         return redirect()->route('admin.device.index')->with('success', 'Updated successfully!' );
@@ -114,4 +111,11 @@ class deviceController extends Controller
         device::where('id', $id)->delete();
         return redirect()->route('admin.device.index')->with('success', 'Deleted successfully');
     }
+
+    public function ajaxAllData(Request $request){
+        
+        $str = $request->like ?? '';
+        $devices = device::where('name' , 'like' , "%$str%")->take(100)->get()->toArray();
+        return response()->json($devices, 200);
+    }   
 }

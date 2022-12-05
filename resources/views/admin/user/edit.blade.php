@@ -1,8 +1,7 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="pd-20 card-box mb-30">
-    <h1 class="page-header">User
-        <small>Edit</small>
+    <h1 class="page-header">Sửa thông tin người dùng
     </h1>
     @if (count($errors))
         <div class="alert alert-danger">
@@ -17,20 +16,20 @@
             @csrf
             @method('put')
             <div class="form-group">
-                <label>Name</label>
-                <input class="form-control" name="name" value="{{ $users->name }}" placeholder="Please Enter Name" />
+                <label>Tên người dùng</label>
+                <input class="form-control" name="name" value="{{ $users->name }}" placeholder="Tên người dùng" />
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input class="form-control" name="email" value="{{ $users->email }}" type="email" placeholder="Please Enter Email" />
+                <input class="form-control" name="email" value="{{ $users->email }}" type="email" placeholder="Email" />
             </div>
             <div class="form-group">
-                <label>Password</label>
-                <input class="form-control" name="password" type="password" placeholder="Please Enter Password" />
+                <label>Mật khẩu</label>
+                <input class="form-control" name="password" type="password" placeholder="******" />
             </div>
             <div class="form-group">
-                <label>Confirm</label>
-                <input class="form-control" name="Confirm" type="password" placeholder="Please Enter Confirm Password" />
+                <label>Xác nhận mật khẩu</label>
+                <input class="form-control" name="password_confirmation" type="password" placeholder="******" />
             </div>
             <div class="form-group">
                 <label>Role</label>
@@ -41,7 +40,7 @@
                     <input type="radio" name="is_admin" value="1" @if ($users->is_admin) checked @endif> Admin
                 </label>
             </div>
-            <button type="submit" class="btn btn-dark">Update</button>
+            <button type="submit" class="btn btn-dark">Cập nhật</button>
 
         </form>
     </div>

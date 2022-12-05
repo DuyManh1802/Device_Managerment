@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\category;
+use App\Models\device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Http\Response;
@@ -11,8 +12,9 @@ use Illuminate\Http\Response;
 class categoryController extends Controller
 {
     public function index(){
+        $devices = device::all();
         $categories = category::all();
-        return view('admin.category.list', compact('categories'));
+        return view('admin.category.list', compact('devices','categories'));
     }
 
     public function create(){
@@ -25,15 +27,10 @@ class categoryController extends Controller
                 'name' =>'required'
             ]
             );
-        $slug = Str::slug($request->name);
-        $checkSlug = category::where('slug', $slug)->first();
-        while($checkSlug){
-            $slug = $checkSlug->slug .Str::random(2);
-        }
+        
 
         category::create([
             'name' =>$request->name,
-            'slug' => $slug,
         ]);
         return redirect()->route('admin.category.index')->with('success', 'Created successfully!' );
     }
@@ -48,11 +45,7 @@ class categoryController extends Controller
                 'name' =>'required'
             ]
             );
-        $slug = Str::slug($request->name);
-        $checkSlug = category::where('slug', $slug)->first();
-        while($checkSlug){
-            $slug = $checkSlug->slug .Str::random(2);
-        }
+        
         //c1 tim r update
         // $categories = category::find($id);
         // $categories->update([
@@ -63,7 +56,6 @@ class categoryController extends Controller
         //c2 update truc tiep
         category::where('id', $id)->update([
             'name' =>$request->name,
-            'slug' => $slug
         ]);
         return redirect()->route('admin.category.index', $id)->with('success', 'Edited successfully!' );
     }

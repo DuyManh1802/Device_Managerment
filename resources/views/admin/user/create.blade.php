@@ -1,8 +1,7 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="pd-20 card-box mb-30">
-    <h1 class="page-header">User
-        <small>Create</small>
+    <h1 class="page-header">Tạo tài khoản người dùng
     </h1>
     @if (count($errors))
         <div class="alert alert-danger">
@@ -15,23 +14,23 @@
         <form action="{{ route("admin.user.store") }}" method="POST">
             @csrf
             <div class="form-group">
-                <label>Name</label>
-                <input class="form-control" name="name" placeholder="Please Enter Name" />
+                <label>Tên người dùng</label>
+                <input class="form-control" name="name" placeholder="Tên người dùng" />
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input class="form-control" name="email" type="email" placeholder="Please Enter Email" />
+                <input class="form-control" name="email" type="email" placeholder="Email" />
             </div>
             <div class="form-group">
-                <label>Password</label>
-                <input class="form-control" name="password" type="password" placeholder="Please Enter Password" />
+                <label>Mật khẩu</label>
+                <input class="form-control" name="password" type="password" placeholder="******" />
             </div>
             <div class="form-group">
-                <label>Confirm</label>
-                <input class="form-control" name="confirm" type="password" placeholder="Please Enter Confirm Password" />
+                <label>Xác nhận mật khẩu</label>
+                <input class="form-control" name="confirm" type="password" placeholder="******" />
             </div>
             <div class="form-group">
-                <label>Is Admin</label>
+                <label>Chức vụ</label>
                 <label  class="radio-inline">
                     <input type="radio" name="is_admin" value="0" checked> User
                 </label>
@@ -39,7 +38,7 @@
                     <input type="radio" name="is_admin" value="1"> Admin
                 </label>
             </div>
-            <button type="submit" class="btn btn-dark">Create</button>
+            <button type="submit" class="btn btn-dark">Tạo</button>
 
         </form>
     </div>

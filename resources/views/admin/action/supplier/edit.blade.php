@@ -1,8 +1,8 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="pd-20 card-box mb-30">
-    <h1 class="page-header">Supplier
-        <small>Edit</small>
+    <h1 class="page-header">Nhà cung cấp
+        <small>Sửa</small>
     </h1>
     @if (count($errors))
         <div class="alert alert-danger">
@@ -23,11 +23,11 @@
             @csrf
             @method('put')
             <div class="form-group">
-                <label>Supplier Name</label>
+                <label>Tên nhà cung cấp</label>
                 <input class="form-control" name="name" value="{{ $suppliers->name }}"  />
             </div>
             
-            <button type="submit" class="btn btn-dark">Update</button>
+            <button type="submit" class="btn btn-dark">Cập nhật</button>
 
         <form>
     </div>

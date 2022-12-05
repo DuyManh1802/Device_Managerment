@@ -19,7 +19,7 @@ class loginController extends Controller
             return redirect()->route('admin.home.index');
         }
         else
-            return redirect()->route('admin.login.index')->with('error', 'Email or Password is not correct');
+            return redirect()->route('admin.login.index')->with('error', 'Tài khoản hoặc mật khẩu không chính xác');
     }
 
     public function logout(){
@@ -28,16 +28,17 @@ class loginController extends Controller
     }
 
     public function profile(){
-        return view('admin.auth.profile');
+        return view('admin.login.profile');
     }
 
     public function updateProfile(Request $request){
         $this->validate($request,
             [
                 'name' =>'required',
-                'is_admin' => 'required'
+                'phone' => 'required',
+                'address' => 'required'
             ]);
-        $users = Auth::users();
+        $users = Auth::user();
         $data = [
             'name' => $request->name,
             'phone' => $request->phone,
@@ -45,6 +46,27 @@ class loginController extends Controller
         ];
 
         $users->update($data);
-        return redirect()->route('admin.profile.index')->with('success', 'Updated successfully!');
+        return redirect()->route('admin.login.profile')->with('success', 'Cập nhật thành công');
+    }
+
+    public function showFormRegister(){
+        return view('admin.login.register');
+    }
+    
+    public function register(Request $request){
+        $this->validate($request,
+            [
+                'name' =>'required',
+                'email' => 'required|unique:users|email',
+                'password' => 'min:6|max:32|required_with:confirm|same:confirm',
+                'confirm' => 'min:6|max:32',
+            ]);
+
+        User::create([
+            'name' =>$request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password), 
+        ]);
+        return redirect()->route('admin.login.index')->with('success', 'Đăng ký thành công' );
     }
 }

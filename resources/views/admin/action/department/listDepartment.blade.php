@@ -1,13 +1,22 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="card-box mb-30">
-    <h1 class="page-header">Phòng ban
-    </h1>
+    <h1 class="page-header">Danh sách phòng ban</h1>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
+        <div>
+            {{-- @foreach ($departments as $department) --}}
+                
+            <a href="{{ route('admin.action.department.get.add.device') }}">
+                <button type="submit" class="btn btn-dark">Thêm thiết bị</button>
+            </a>
+            {{-- @endforeach --}}
+            
+
+        </div>
         <table class="table nowrap table table-striped table-bordered table-hover" id="dataTables-example">
             <thead>
                 <tr align="center">
@@ -15,9 +24,8 @@
                     <th>Tên phòng ban</th>                   
                     <th>Người quản lý</th>                   
                     <th>Địa chỉ phòng ban</th>  
-                    <th>Thêm</th>                 
-                    <th>Sửa</th>
-                    <th>Xóa</th>
+                    <th>Xem chi tiết</th>                 
+                    
                 </tr>
             </thead>
             <tbody>
@@ -28,10 +36,7 @@
                     <td>{{ $department->name }}</td>                   
                     <td>{{ $department->manager }}</td>                   
                     <td>{{ $department->address}}</td> 
-                    <td class="center"><i class="icon-copy bi bi-plus-square"></i> <a href="{{ route('admin.action.department.create', $department->id) }}">Thêm</a></td>
-                    {{-- <td class="center"><i class="icon-copy bi bi-plus-square"></i>  <a href="{{ route('admin.action.department.get.add.device', ['id' => $department->id]) }}">Thêm thiết bị</a></td>                  --}}
-                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{{ route('admin.action.department.edit', $department->id) }}">Sửa</a></td>
-                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{ route('admin.action.department.delete', $department->id) }}">Xóa</a></td>
+                    <td class="center"><i class="icon-copy bi bi-eye-fill"></i>  <a href="{{ route('admin.department.show', ['id' =>$department->id ])}}">Xem</a></td>                 
                 </tr>
                 @endforeach
                 

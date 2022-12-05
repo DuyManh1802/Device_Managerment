@@ -31,9 +31,15 @@ Route::prefix('admin')->group(function(){
     Route::post('login', [loginController::class, 'checkLogin'])->name('admin.login.checkLogin');
 });
 
+Route::prefix('admin')->group(function(){
+    Route::get('register', [loginController::class, 'showFormRegister'])->name('admin.showFormRegister');
+    Route::post('register', [loginController::class, 'register'])->name('admin.register');
+
+});
+
 Route::prefix('admin')->middleware('admin.login')->group(function(){
     Route::get('logout', [loginController::class, 'logout'])->name('admin.logout');
-    Route::get('profile', [loginController::class, 'profile'])->name('admin.profile.index');
+    Route::get('profile', [loginController::class, 'profile'])->name('admin.login.profile');
     Route::put('profile', [loginController::class, 'updateProfile'])->name('admin.profile.update');
 
     Route::prefix('category')->group(function(){
@@ -53,6 +59,15 @@ Route::prefix('admin')->middleware('admin.login')->group(function(){
             Route::get('edit/{id}', [departmentController::class, 'edit'])->name('admin.action.department.edit');
             Route::put('update/{id}', [departmentController::class, 'update'])->name('admin.action.department.update');
             Route::get('delete/{id}', [departmentController::class, 'delete'])->name('admin.action.department.delete');
+            
+            Route::get('list', [departmentController::class, 'listDepartment'])->name('admin.department.listDepartment');
+            
+            Route::get('add-device-department', [departmentController::class, 'formAddDevice'])->name('admin.action.department.get.add.device');
+            // Route::get('add-device-department-{id}', [departmentController::class, 'formAddDevice'])->name('admin.action.department.get.add.device');
+            Route::post('add-device-department', [departmentController::class, 'addDevice'])->name('admin.action.department.get.post.device');
+            Route::get('delete-device-department/{id}', [departmentController::class, 'deleteDevice'])->name('admin.action.department.deleteDevice');
+            Route::get('/{id}', [departmentController::class, 'show'])->name('admin.department.show');
+            // Route::post('add-device-department-{id}', [departmentController::class, 'addDevice'])->name('admin.action.department.get.post.device');
         });
 
         Route::prefix('depot')->group(function(){
@@ -82,6 +97,7 @@ Route::prefix('admin')->middleware('admin.login')->group(function(){
         Route::get('edit/{id}', [deviceController::class, 'edit'])->name('admin.device.edit');
         Route::put('update/{id}', [deviceController::class, 'update'])->name('admin.device.update');
         Route::get('delete/{id}', [deviceController::class, 'delete'])->name('admin.device.delete');
+        
     });
 
     Route::prefix('status')->group(function(){

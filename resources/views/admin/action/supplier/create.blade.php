@@ -1,8 +1,8 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="pd-20 card-box mb-30">
-    <h1 class="page-header">Supplier
-        <small>Create</small>
+    <h1 class="page-header">Nhà cung cấp
+        <small>Thêm</small>
     </h1>
     @if (count($errors))
         <div class="alert alert-danger">
@@ -15,11 +15,11 @@
         <form action="{{ route("admin.action.supplier.store") }}" method="POST">
             @csrf
             <div class="form-group">
-                <label>Supplier Name</label>
-                <input class="form-control" name="name" placeholder="Please Enter Supplier Name" />
+                <label>Tên nhà cung cấp</label>
+                <input class="form-control" name="name" placeholder="Tên nhà cung cấp" />
             </div>
             
-            <button type="submit" class="btn btn-dark">Create</button>
+            <button type="submit" class="btn btn-dark">Thêm</button>
 
         <form>
     </div>

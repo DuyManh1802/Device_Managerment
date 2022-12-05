@@ -1,9 +1,13 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="card-box mb-30">
-    <h1 class="page-header">Thiết bị
+    {{-- <h1 class="page-header">Thiết bị
         <small>Danh sách</small>
-    </h1>
+    </h1> --}}
+    <div>
+        <h2 class="page-header">Danh sách thiết bị phòng: <u>{{$department->name}}</u></h2>  
+        <h6>Số lượng: {{$devices->count()}}</h6>
+    </div>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -17,8 +21,8 @@
                     <th>Tên</th>                
                     <th>Ảnh</th>                   
                     <th>Cấu hình</th>
-                    <th>Sửa</th>
-                    <th>Xóa</th>
+                    <th>Trả về kho</th>
+                    <th>Báo hỏng</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,13 +34,11 @@
                     <td>{{ $device->name }}</td>                   
                     <td><img src="{{ $device->imageUrl() }}" alt="" width="50px" height="auto"></td>                   
                     <td>{{ $device->configuration }}</td>  
-                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{{ route('admin.device.edit', $device->id) }}">Sửa</a></td>
-                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{ route('admin.device.delete', $device->id) }}">Xóa</a></td>
+                    <td class="center"><a href="{{ route('admin.action.department.deleteDevice', $device->id) }}"><i class="icon-copy bi bi-box-arrow-in-right"></i></a></td>
+                    <td class="center"><a href=""><i class="icon-copy bi bi-tools"></i></a></td>
                 </tr>
                 @endforeach
             </tbody>
-        </table>
-        {{ $devices->links() }}
-    
+        </table> 
 </div>
 @endsection

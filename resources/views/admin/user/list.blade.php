@@ -1,8 +1,7 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="card-box mb-30">
-    <h1 class="page-header">User
-        <small>List</small>
+    <h1 class="page-header">Danh sách người dùng
     </h1>
     @if (session('success'))
         <div class="alert alert-success">
@@ -13,11 +12,11 @@
             <thead>
                 <tr align="center">
                     <th>ID</th>
-                    <th>Name</th>                   
+                    <th>Tên người dùng</th>                   
                     <th>Email</th>                   
-                    <th>Is Admin</th>                 
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>Admin</th>                 
+                    <th>Sửa</th>
+                    <th>Xóa</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,8 +27,8 @@
                     <td>{{ $user->name }}</td>                   
                     <td>{{ $user->email }}</td>                   
                     <td>{{ $user->is_admin ? "x" : ""}}</td> 
-                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{{ route('admin.user.edit', $user->id) }}">Edit</a></td>
-                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{ route('admin.user.delete', $user->id) }}"> Delete</a></td>
+                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{{ route('admin.user.edit', $user->id) }}">Sửa</a></td>
+                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{ route('admin.user.delete', $user->id) }}">Xóa</a></td>
                 </tr>
                 @endforeach
                 
