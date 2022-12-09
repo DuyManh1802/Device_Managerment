@@ -1,8 +1,8 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="pd-20 card-box mb-30">
-    <h1 class="page-header">Thiết bị
-        <small>Thêm</small>
+    <h1 class="page-header">Thêm Thiết bị
+
     </h1>
     @if (count($errors))
         <div class="alert alert-danger">
@@ -30,7 +30,7 @@
                     @endforeach
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label>Tên</label>
                 <input class="form-control" name="name" placeholder="Tên thiết bị" />
@@ -39,7 +39,7 @@
                 <label>Ảnh</label>
                 <input type="file"  class="form-control" name="image" accept="image/*" />
             </div>
-            
+
             <div class="form-group">
                 <label>Cấu hình</label>
                 <input class="form-control" name="configuration" placeholder="Cấu hình" />

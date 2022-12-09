@@ -10,13 +10,14 @@ class devicedetail extends Model
     use HasFactory;
     protected $table = 'devicedetail';
     protected $fillable = [
+        'id',
         'department_id',
         'device_id',
         'department_used',
         'amount_used',
         'status'
     ];
-    public $timestamps = false;
+    // public $timestamps = false;
     public function department(){
         return $this->belongsTo(department::class, 'department_id', 'id');
     }

@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\departmentController;
 use App\Http\Controllers\admin\supplierController;
 use App\Http\Controllers\admin\depotController;
 use App\Http\Controllers\admin\deviceController;
+use App\Http\Controllers\admin\deviceDetailController;
 use App\Http\Controllers\admin\homeController;
 use App\Http\Controllers\admin\loginController;
 use App\Http\Controllers\admin\userController;
@@ -34,7 +35,6 @@ Route::prefix('admin')->group(function(){
 Route::prefix('admin')->group(function(){
     Route::get('register', [loginController::class, 'showFormRegister'])->name('admin.showFormRegister');
     Route::post('register', [loginController::class, 'register'])->name('admin.register');
-
 });
 
 Route::prefix('admin')->middleware('admin.login')->group(function(){
@@ -59,17 +59,26 @@ Route::prefix('admin')->middleware('admin.login')->group(function(){
             Route::get('edit/{id}', [departmentController::class, 'edit'])->name('admin.action.department.edit');
             Route::put('update/{id}', [departmentController::class, 'update'])->name('admin.action.department.update');
             Route::get('delete/{id}', [departmentController::class, 'delete'])->name('admin.action.department.delete');
-            
+
             Route::get('list', [departmentController::class, 'listDepartment'])->name('admin.department.listDepartment');
-            
+
             Route::get('add-device-department', [departmentController::class, 'formAddDevice'])->name('admin.action.department.get.add.device');
             // Route::get('add-device-department-{id}', [departmentController::class, 'formAddDevice'])->name('admin.action.department.get.add.device');
             Route::post('add-device-department', [departmentController::class, 'addDevice'])->name('admin.action.department.get.post.device');
-            Route::get('delete-device-department/{id}', [departmentController::class, 'deleteDevice'])->name('admin.action.department.deleteDevice');
+            Route::get('delete-device-department/{id}/{deparment}', [departmentController::class, 'deleteDevice'])->name('admin.action.department.deleteDevice');
+            Route::get('update-status-device/{id}/{department}', [departmentController::class, 'updateStatusDevice'])->name('admin.action.department.updateStatusDevice');
             Route::get('/{id}', [departmentController::class, 'show'])->name('admin.department.show');
-            // Route::post('add-device-department-{id}', [departmentController::class, 'addDevice'])->name('admin.action.department.get.post.device');
+
+            // Route::get('listBroken', [departmentController::class, 'listBroken'])->name('admin.department.listBroken');
+            // Route::get('fixed', [departmentController::class, 'fixed'])->name('admin.department.fixed');
+            // Route::put('fix', [departmentController::class, 'fix'])->name('admin.department.fix');
+            // Route::get('listFixed', [departmentController::class, 'listFixed'])->name('admin.department.listFixed');
+
         });
 
+        Route::prefix('devicedetail')->group(function(){
+            Route::get('/{id}/{device}', [deviceDetailController::class, 'listBroken'])->name('admin.action.devicedetail.listBroken');
+        });
         Route::prefix('depot')->group(function(){
             Route::get('', [depotController::class, 'index'])->name('admin.action.depot.index');
             Route::get('create', [depotController::class, 'create'])->name('admin.action.depot.create');
@@ -97,24 +106,17 @@ Route::prefix('admin')->middleware('admin.login')->group(function(){
         Route::get('edit/{id}', [deviceController::class, 'edit'])->name('admin.device.edit');
         Route::put('update/{id}', [deviceController::class, 'update'])->name('admin.device.update');
         Route::get('delete/{id}', [deviceController::class, 'delete'])->name('admin.device.delete');
-        
+
     });
 
-    Route::prefix('status')->group(function(){
-        Route::get('', [statusController::class, 'index'])->name('admin.status.index');
-        Route::get('create', [statusController::class, 'create'])->name('admin.status.create');
-        Route::post('store', [statusController::class, 'store'])->name('admin.status.store');
-        Route::get('edit/{id}', [statusController::class, 'edit'])->name('admin.status.edit');
-        Route::put('update/{id}', [statusController::class, 'update'])->name('admin.status.update');
-        Route::get('delete/{id}', [statusController::class, 'delete'])->name('admin.status.delete');
-    });
+
 
     Route::prefix('home')->group(function(){
         Route::get('', [homeController::class, 'index'])->name('admin.home.index');
-        
+
     });
 
-    
+
 
     Route::prefix('user')->group(function(){
         Route::get('', [userController::class, 'index'])->name('admin.user.index');

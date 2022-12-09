@@ -25,7 +25,7 @@ class departmentController extends Controller
     function show($id){
         $department = department::find($id);
         // $devices = $department->devices()->where('status', 1)->get();
-        $devices = $department->devices()->get(); 
+        $devices = $department->devices()->get();
         return view('admin.action.department.show', ['department'=>$department, 'devices'=> $devices]);
     }
 
@@ -99,7 +99,7 @@ class departmentController extends Controller
     //         DB::beginTransaction();
     //         $department = department::find($id);
     //         // lấy all  $department->devices()->where()->get();
-            
+
     //         $department->devices()->detach([$device_id]);
     //         $department->devices()->attach($device_id, $data);
     //         DB::commit();
@@ -114,24 +114,30 @@ class departmentController extends Controller
     function addDevice(Request $request){
         try{
             $device_id = $request->device_id;
-           
+
             // $data = $request->only(['department_used','amount_used','status']);
-            $data = ['status' => 1];
+
+            /// lấy bản ghi có depat=
+            $item = devicedetail::where(['department_id' => $request->department, 'device_id' => $device_id])->first();
+
+            $data = [
+                'status' => 1,
+            ];
             DB::beginTransaction();
             $department = department::find($request->department);
-             
+
             // lấy all  $department->devices()->where()->get();
-             $department->devices()->detach([$device_id]); // xóa 
-            $department->devices()->attach($device_id, $data); // thêm 
+             $department->devices()->detach([$device_id]); // xóa
+            $department->devices()->attach($device_id, $data); // thêm
             DB::commit();
             return redirect()->route('admin.department.listDepartment')->with('success', 'Created successfully!' );
-        }catch(\Exception $ex){ 
+        }catch(\Exception $ex){
             dd($ex);
             DB::rollBack();
             return back()->with('notification_error', 'Lỗi !!! ');
         }
-       
-        
+
+
     }
 
     public function listDepartment(){
@@ -139,22 +145,61 @@ class departmentController extends Controller
         return view('admin.action.department.listDepartment', compact('departments'));
     }
 
-    public function deleteDevice(Request $request){
-        try{
-            $device_id = $request->device_id;
-            
-            DB::beginTransaction();
-            $department = department::find($request->department);
-           
-            $department->devices()->detach([$device_id]); 
-            DB::commit();
-            return redirect()->route('admin.action.department.show', ['id' =>$department->id ])->with('success', 'Deleted successfully!' );
+    /// $item = devicedetail::where(['deperr...' => $deparment , 'device...' => $id])->first();
+    // $item->... = giá trị mới;
+    // $item->save();
 
-        }catch(\Exception $ex){ 
-            dd($ex);
+    public function deleteDevice($id, $deparment){
+        try{
+            DB::beginTransaction();
+            $department = department::find($deparment);
+
+            $department->devices()->detach([$id]);
+            DB::commit();
+            return redirect()->back()->with('success', 'Deleted successfully!' );
+
+
+        }catch(\Exception $ex){
             DB::rollBack();
-            return back()->with('notification_error', 'Lỗi !!! ');
+            return redirect()->back()->with('notification_error', 'Lỗi !!! ');
         }
     }
-    
+
+    public function updateStatusDevice($id, $department){
+        try{
+
+            DB::beginTransaction();
+
+            $item = devicedetail::where(['department_id' => $department, 'device_id' => $id])->first();
+
+            $item->status = 0;
+            // $item->amount_used == $item->amount_used - 1;
+            $item->save();
+            DB::commit();
+            return redirect()->back()->with('success', 'Upleted successfully!' );
+
+
+        }catch(\Exception $ex){
+            dd($ex);
+            DB::rollBack();
+            return redirect()->back()->with('notification_error', 'Lỗi !!! ');
+        }
+    }
+
+    public function listBroken(){
+        //ids = deparent_device::where(deparent_id, $id)->where('status' ,0)->get()->pluck('device_id')->toArray(); [1,2,33];
+        // all = device::whereIn('id', ids)->get()
+    }
+
+    public function fixed(){
+
+    }
+
+    public function fix(){
+
+    }
+
+    public function listFixed(){
+
+    }
 }

@@ -1,8 +1,8 @@
 @extends('admin.layout.master')
 @section('content')
 <div class="pd-20 card-box mb-30">
-    <h1 class="page-header">Phòng ban
-        <small>Thêm thiết bị</small>
+    <h1 class="page-header">Thêm thiết bị cho Phòng ban
+
     </h1>
     @if (count($errors))
         <div class="alert alert-danger">
@@ -24,24 +24,24 @@
                 <label>Chọn thiết bị</label>
                 <select name="device_id" class="form-control">
                     @foreach ($devices as $device)
-                        <option value="{{ $device->id }}" 
+                        <option value="{{ $device->id }}"
                             selected
                         >{{ $device->name }}</option>
                     @endforeach
                 </select>
             </div>
-            
+
             <div class="form-group">
-                <label >Danh mục</label>
+                <label >Phòng</label>
                 <select name="department" class="form-control">
                     @foreach ($departments as $department)
-                        <option value="{{ $department->id }}" 
+                        <option value="{{ $department->id }}"
                             selected
                         >{{ $department->name }}</option>
                     @endforeach
                 </select>
             </div>
-            
+
             {{-- <div class="form-group">
                 <label>Người quản lý</label>
                 <input class="form-control" name="manager" placeholder="Người quản lý" />
@@ -85,8 +85,8 @@
                     };
                 }
             },
-           
+
         });
-        
+
         </script>
 @endpush

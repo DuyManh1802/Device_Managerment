@@ -1,6 +1,7 @@
-@php 
+@php
     $categories = App\Models\category::all();
-
+    $id = App\Models\devicedetail::all();
+    $devices =  App\Models\device::all();
 @endphp
 
 <div class="left-side-bar">
@@ -20,7 +21,7 @@
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
-                
+
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon bi "><i class="icon-copy bi bi-list-nested"></i></span>
@@ -38,12 +39,12 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="{{ route('admin.device.index') }}">Tất cả thiết bị</a></li>
-                         
-                        @foreach ($categories as $category)
-                        
+
                         <li>
-                        <a href="{{route('admin.device.index', ['cate' => $category->id])}}">{{ $category->name }}</a></li>
-                        @endforeach
+                            @foreach ($categories as $category)
+
+                            <a href="{{route('admin.device.index', ['cate' => $category->id])}}">{{ $category->name }}</a></li>
+                            @endforeach
                         <li><a href="{{ route('admin.device.create') }}">Thêm thiết bị mới</a></li>
                     </ul>
                 </li>
@@ -57,16 +58,19 @@
 
                     </ul>
                 </li>
-                
+
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon bi "><i class="icon-copy bi bi-tools"></i></span
                         ><span class="mtext">Thiệt bị hỏng </span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="ui-buttons.html">Danh sách thiết bị hỏng</a></li>
-                        <li><a href="ui-cards.html">Thiết bị đã sửa chữa</a></li>
-                        
+                        <li>
+
+                            {{-- <a href="{{route('admin.action.deviceDetail.listBroken', ['id' => 10, 'device' => 6])}}">Danh sách thiết bị hỏng</a> --}}
+                        </li>
+                        <li><a href="#">Thiết bị đã sửa chữa</a></li>
+
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -78,10 +82,10 @@
                         <li><a href="{{ route('admin.action.department.index') }}">Quản lý thông tin phòng ban</a></li>
                         <li><a href="{{ route('admin.action.depot.index') }}">Quản lý thông tin kho</a></li>
                         <li><a href="{{ route('admin.action.supplier.index') }}">Quản lý thông tin NCC</a></li>
-                    
+
                     </ul>
                 </li>
-                
+
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon bi "><i class="icon-copy bi bi-person-square"></i></span
@@ -89,11 +93,11 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="{{ route('admin.user.index') }}">Danh sách người dùng</a></li>
-                        <li><a href="{{ route('admin.user.create') }}">Thêm người dùng mới</a></li>                      
+                        <li><a href="{{ route('admin.user.create') }}">Thêm người dùng mới</a></li>
                     </ul>
                 </li>
-                
-                
+
+
             </ul>
         </div>
     </div>
