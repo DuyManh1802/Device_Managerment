@@ -40,11 +40,11 @@
                     <ul class="submenu">
                         <li><a href="{{ route('admin.device.index') }}">Tất cả thiết bị</a></li>
 
+                        @foreach ($categories as $category)
                         <li>
-                            @foreach ($categories as $category)
 
                             <a href="{{route('admin.device.index', ['cate' => $category->id])}}">{{ $category->name }}</a></li>
-                            @endforeach
+                        @endforeach
                         <li><a href="{{ route('admin.device.create') }}">Thêm thiết bị mới</a></li>
                     </ul>
                 </li>
@@ -66,10 +66,9 @@
                     </a>
                     <ul class="submenu">
                         <li>
-
-                            {{-- <a href="{{route('admin.action.deviceDetail.listBroken', ['id' => 10, 'device' => 6])}}">Danh sách thiết bị hỏng</a> --}}
+                            <a href="{{route('admin.devicedetail.listBroken')}}">Danh sách thiết bị hỏng</a>
                         </li>
-                        <li><a href="#">Thiết bị đã sửa chữa</a></li>
+                        <li><a href="{{route('admin.devicedetail.listFixed')}}">Thiết bị đã sửa chữa</a></li>
 
                     </ul>
                 </li>

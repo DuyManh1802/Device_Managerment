@@ -69,16 +69,16 @@ Route::prefix('admin')->middleware('admin.login')->group(function(){
             Route::get('update-status-device/{id}/{department}', [departmentController::class, 'updateStatusDevice'])->name('admin.action.department.updateStatusDevice');
             Route::get('/{id}', [departmentController::class, 'show'])->name('admin.department.show');
 
-            // Route::get('listBroken', [departmentController::class, 'listBroken'])->name('admin.department.listBroken');
-            // Route::get('fixed', [departmentController::class, 'fixed'])->name('admin.department.fixed');
-            // Route::put('fix', [departmentController::class, 'fix'])->name('admin.department.fix');
-            // Route::get('listFixed', [departmentController::class, 'listFixed'])->name('admin.department.listFixed');
+
 
         });
 
-        Route::prefix('devicedetail')->group(function(){
-            Route::get('/{id}/{device}', [deviceDetailController::class, 'listBroken'])->name('admin.action.devicedetail.listBroken');
-        });
+        // Route::prefix('devicedetail')->group(function(){
+        //     Route::get('/', [deviceDetailController::class, 'listBroken'])->name('admin.devicedetail.listBroken');
+        //     Route::get('fixed', [deviceDetailController::class, 'fixed'])->name('admin.devicedetail.fixed');
+        //     // Route::get('/{id}/{device}', [deviceDetailController::class, 'listFixed'])->name('admin.devicedetail.listFixed');
+
+        // });
         Route::prefix('depot')->group(function(){
             Route::get('', [depotController::class, 'index'])->name('admin.action.depot.index');
             Route::get('create', [depotController::class, 'create'])->name('admin.action.depot.create');
@@ -98,6 +98,13 @@ Route::prefix('admin')->middleware('admin.login')->group(function(){
         });
     });
 
+
+    Route::prefix('devicedetail')->group(function(){
+        Route::get('/listBroken', [deviceDetailController::class, 'listBroken'])->name('admin.devicedetail.listBroken');
+        Route::get('fixed', [deviceDetailController::class, 'fixed'])->name('admin.devicedetail.fixed');
+        Route::get('/listFixed', [deviceDetailController::class, 'listFixed'])->name('admin.devicedetail.listFixed');
+
+    });
 
     Route::prefix('device')->group(function(){
         Route::get('', [deviceController::class, 'index'])->name('admin.device.index');

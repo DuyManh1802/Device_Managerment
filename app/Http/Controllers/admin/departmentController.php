@@ -186,20 +186,25 @@ class departmentController extends Controller
         }
     }
 
-    public function listBroken(){
-        //ids = deparent_device::where(deparent_id, $id)->where('status' ,0)->get()->pluck('device_id')->toArray(); [1,2,33];
-        // all = device::whereIn('id', ids)->get()
+    public function fixed($id, $department){
+        try{
+
+            DB::beginTransaction();
+
+            $item = devicedetail::where(['department_id' => $department, 'device_id' => $id])->first();
+
+            $item->status = 2;
+            $item->save();
+            DB::commit();
+            return redirect()->back()->with('success', 'Upleted successfully!' );
+
+
+        }catch(\Exception $ex){
+            dd($ex);
+            DB::rollBack();
+            return redirect()->back()->with('notification_error', 'Lỗi !!! ');
+        }
     }
 
-    public function fixed(){
 
-    }
-
-    public function fix(){
-
-    }
-
-    public function listFixed(){
-
-    }
 }

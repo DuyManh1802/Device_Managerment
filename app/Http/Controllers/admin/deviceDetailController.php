@@ -38,20 +38,42 @@ class deviceDetailController extends Controller
         return redirect()->route('admin.action.devicedetail.index', $id)->with('success', 'Deleted successfully!' );
     }
 
-    public function listBroken($id, $device){
-        // $devicedetail = devicedetail::find($id);
-        // $deviceBroken = $devicedetail->devices()->where('status', 0)->get();
-        // $deviceBroken->count();
-        // $ids = devicedetail::where(['device_id'=>$device, 'id' =>$id])->where('status', 0)->get()->pluck('device_id')->toArray();
+    public function listBroken(){
         $ids  = DB::table('devicedetail')
-        ->join('device', 'device.id', '=', 'devicedetail.device_id')->where('devicedetail.status','=', 0)
-        ->get();
+        ->join('device', 'device.id', '=', 'devicedetail.device_id')->join('department', 'department.id', '=', 'devicedetail.department_id')
+        ->where('devicedetail.status','=', 0)->get();
         $devices = $ids;
-        // return view('admin.action.devicedetail.listBroken');
+
+        // $time = DB::table('devicedetail')->where('status', '=', 0)->get('update_at');
+        return view('admin.devicedetail.listBroken', [ 'devices' => $devices]);
     }
 
+    public function fixed(){
+        try{
+
+            DB::beginTransaction();
+
+            $device = devicedetail::where('devicedetail.status', '=', 0)->first();
+            $device->status = 2;
+            $device->save();
+            DB::commit();
+            return redirect()->back()->with('success', 'Upleted successfully!' );
 
 
+        }catch(\Exception $ex){
+            dd($ex);
+            DB::rollBack();
+            return redirect()->back()->with('notification_error', 'Lỗi !!! ');
+        }
+    }
+
+    public function listFixed(){
+        $devices = DB::table('devicedetail')
+        ->join('device', 'device.id', '=', 'devicedetail.device_id')
+        ->where('devicedetail.status','=', 2)->get();
+        return view('admin.devicedetail.listFixed', [ 'devices' => $devices]);
+
+    }
 
     //ids = deparent_device::where(deparent_id, $id)->where('status' ,0)->get()->pluck('device_id')->toArray(); [1,2,33];
         // all = device::whereIn('id', ids)->get()
