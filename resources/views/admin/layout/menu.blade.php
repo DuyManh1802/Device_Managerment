@@ -1,18 +1,14 @@
 @php
-    $categories = App\Models\category::all();
-    $id = App\Models\devicedetail::all();
-    $devices =  App\Models\device::all();
+$categories = App\Models\category::all();
+$id = App\Models\devicedetail::all();
+$devices = App\Models\device::all();
 @endphp
 
 <div class="left-side-bar">
     <div class="brand-logo">
         <a href="{{ route('admin.home.index') }}">
             <img src="/template/vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-            <img
-                src="/template/vendors/images/deskapp-logo-white.svg"
-                alt=""
-                class="light-logo"
-            />
+            <img src="/template/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo" />
         </a>
         <div class="close-sidebar" data-toggle="left-sidebar-close">
             <i class="ion-close-round"></i>
@@ -42,16 +38,16 @@
 
                         @foreach ($categories as $category)
                         <li>
-
-                            <a href="{{route('admin.device.index', ['cate' => $category->id])}}">{{ $category->name }}</a></li>
+                            <a href="{{route('admin.device.index', ['cate' => $category->id])}}">{{ $category->name
+                                }}</a>
+                        </li>
                         @endforeach
                         <li><a href="{{ route('admin.device.create') }}">Thêm thiết bị mới</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon bi bi-table"></span
-                        ><span class="mtext">Phòng ban</span>
+                        <span class="micon bi bi-table"></span><span class="mtext">Phòng ban</span>
                     </a>
                     <ul class="submenu">
                         <li><a href="{{ route('admin.department.listDepartment') }}">Danh sách phòng ban</a></li>
@@ -61,8 +57,8 @@
 
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon bi "><i class="icon-copy bi bi-tools"></i></span
-                        ><span class="mtext">Thiệt bị hỏng </span>
+                        <span class="micon bi "><i class="icon-copy bi bi-tools"></i></span><span class="mtext">Thiệt bị
+                            hỏng </span>
                     </a>
                     <ul class="submenu">
                         <li>
@@ -74,8 +70,7 @@
                 </li>
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon bi bi-command"></span
-                        ><span class="mtext">Quản lý tác vụ</span>
+                        <span class="micon bi bi-command"></span><span class="mtext">Quản lý tác vụ</span>
                     </a>
                     <ul class="submenu">
                         <li><a href="{{ route('admin.action.department.index') }}">Quản lý thông tin phòng ban</a></li>
@@ -87,8 +82,8 @@
 
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon bi "><i class="icon-copy bi bi-person-square"></i></span
-                        ><span class="mtext">Quản lý người dùng</span>
+                        <span class="micon bi "><i class="icon-copy bi bi-person-square"></i></span><span
+                            class="mtext">Quản lý người dùng</span>
                     </a>
                     <ul class="submenu">
                         <li><a href="{{ route('admin.user.index') }}">Danh sách người dùng</a></li>

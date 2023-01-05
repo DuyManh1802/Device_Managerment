@@ -7,9 +7,6 @@
         {{ session('success') }}
     </div>
     @endif
-    @php
-    $id = App\Models\devicedetail::all();
-    @endphp
 
     <table class="table nowrap table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
@@ -38,7 +35,6 @@
             @endforeach
         </tbody>
     </table>
-
 </div>
 
 @endsection
