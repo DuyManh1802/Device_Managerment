@@ -27,7 +27,7 @@ class depotController extends Controller
         depot::create([
             'name' =>$request->name,
         ]);
-        return redirect()->route('admin.action.depot.index')->with('success', 'Created successfully!' );
+        return redirect()->route('admin.action.depot.index')->with('success', 'Thêm mới thành công!' );
     }
     public function edit($id){
         $depots = depot::find($id);
@@ -44,11 +44,11 @@ class depotController extends Controller
             'name' =>$request->name,
 
         ]);
-        return redirect()->route('admin.action.depot.index', $id)->with('success', 'Edited successfully!' );
+        return redirect()->route('admin.action.depot.index', $id)->with('success', 'Sửa thành công!' );
 
     }
     public function delete($id){
         depot::where('id', $id)->delete();
-        return redirect()->route('admin.action.depot.index', $id)->with('success', 'Deleted successfully!' );
+        return redirect()->route('admin.action.depot.index', $id)->with('success', 'Xóa thành công!' );
     }
 }

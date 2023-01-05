@@ -32,7 +32,7 @@ class userController extends Controller
             'password' => bcrypt($request->password), //c2 Hash::make($request->password)
             'is_admin' => $request->is_admin,
         ]);
-        return redirect()->route('admin.user.index')->with('success', 'Created successfully!' );
+        return redirect()->route('admin.user.index')->with('success', 'Thêm mới thành công!' );
     }
     public function edit($id){
         $users = User::find($id);
@@ -53,16 +53,16 @@ class userController extends Controller
         if($request->password ){
             $this->validate($request,
             [
-                'password' => 'min:6|max:32|confirmed', 
+                'password' => 'min:6|max:32|confirmed',
             ]);
             $data['password'] = Hash::make($request->password);
         }
 
         $users->update($data);
-        return redirect()->route('admin.user.index', $users->id)->with('success', 'Updated successfully!');
+        return redirect()->route('admin.user.index', $users->id)->with('success', 'Sửa thành công!');
     }
     public function delete($id){
         User::where('id', $id)->delete();
-        return redirect()->route('admin.user.index', $id)->with('success', 'Deleted successfully!' );
+        return redirect()->route('admin.user.index', $id)->with('success', 'Xóa thành công!' );
     }
 }

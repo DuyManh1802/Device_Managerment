@@ -25,12 +25,12 @@ class deviceDetailController extends Controller
         devicedetail::where('device_id', 'device_id', $device_id, $department_id)->update([
             'status' =>$request->status,
         ]);
-        return redirect()->route('admin.action.department.show')->with('success', 'Edited successfully!' );
+        return redirect()->route('admin.action.department.show')->with('success', 'Sửa thành công!' );
 
     }
     public function delete($id){
         devicedetail::where('id', $id)->delete();
-        return redirect()->route('admin.action.devicedetail.index', $id)->with('success', 'Deleted successfully!' );
+        return redirect()->route('admin.action.devicedetail.index', $id)->with('success', 'Xóa thành công!' );
     }
 
     public function listBroken(){
@@ -57,7 +57,7 @@ class deviceDetailController extends Controller
             $device->status = 2;
             $device->save();
             DB::commit();
-            return redirect()->back()->with('success', 'Updated successfully!' );
+            return redirect()->back()->with('success', 'Thành công!' );
 
 
         }catch(\Exception $ex){

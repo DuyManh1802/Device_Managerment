@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\device;
 use App\Models\category;
 use App\Models\depot;
-use App\Models\status;
 use Nette\Utils\Random;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +19,7 @@ class deviceController extends Controller
             $query->where('category_id', $request->cate);
         }
         $devices = $query->paginate(20);
-       
+
         return view('admin.device.list', compact('devices'));
     }
     public function create(){
@@ -29,15 +28,13 @@ class deviceController extends Controller
         return view('admin.device.create', compact('categories', 'depots'));
     }
     public function store(Request $request){
-        $this->validate($request,
-            [
+        $this->validate($request, [
                 'category_id' =>'required',
                 'depot_id' =>'required',
                 'name' =>'required',
                 'image' =>'required',
                 'configuration' =>'required',
-            ]
-            );
+            ]);
             if($request->hasFile('image')){
                 $file = $request->file('image');
                 $name_file = $file->getClientOriginalName();
@@ -61,8 +58,8 @@ class deviceController extends Controller
                 'configuration'=>$request->configuration,
 
             ]);
-        return redirect()->route('admin.device.index')->with('success', 'Created successfully!' );
-            
+        return redirect()->route('admin.device.index')->with('success', 'Thêm mới thành công!' );
+
     }
     public function edit($id){
         $devices = device::find($id);
@@ -71,14 +68,13 @@ class deviceController extends Controller
         return view('admin.device.edit', compact('devices', 'categories', 'depots'));
     }
     public function update(Request $request, $id){
-        $this->validate($request,
-            [
-                'category_id' =>'required',
-                'depot_id' =>'required',
-                'name' =>'required',
-                'image' =>'required',
-                'configuration' =>'required',
-            ]
+        $this->validate($request, [
+            'category_id' =>'required',
+            'depot_id' =>'required',
+            'name' =>'required',
+            'image' =>'required',
+            'configuration' =>'required',
+        ]
             );
             if($request->hasFile('image')){
                 $file = $request->file('image');
@@ -103,19 +99,19 @@ class deviceController extends Controller
                 'image'=> isset($image) ? $image : $devices->image,
                 'configuration'=>$request->configuration,
             ]);
-            
-        return redirect()->route('admin.device.index')->with('success', 'Updated successfully!' );
+
+        return redirect()->route('admin.device.index')->with('success', 'Sửa thành công!' );
     }
 
     public function delete($id){
         device::where('id', $id)->delete();
-        return redirect()->route('admin.device.index')->with('success', 'Deleted successfully');
+        return redirect()->route('admin.device.index')->with('success', 'Xóa thành công!');
     }
 
     public function ajaxAllData(Request $request){
-        
+
         $str = $request->like ?? '';
         $devices = device::where('name' , 'like' , "%$str%")->take(100)->get()->toArray();
         return response()->json($devices, 200);
-    }   
+    }
 }

@@ -28,7 +28,7 @@ class supplierController extends Controller
             'name' =>$request->name,
 
         ]);
-        return redirect()->route('admin.action.supplier.index')->with('success', 'Created successfully!' );
+        return redirect()->route('admin.action.supplier.index')->with('success', 'Thêm mới thành công!' );
     }
     public function edit($id){
         $suppliers = supplier::find($id);
@@ -45,11 +45,11 @@ class supplierController extends Controller
             'name' =>$request->name,
 
         ]);
-        return redirect()->route('admin.action.supplier.index', $id)->with('success', 'Edited successfully!' );
+        return redirect()->route('admin.action.supplier.index', $id)->with('success', 'Sửa thành công!' );
 
     }
     public function delete($id){
         supplier::where('id', $id)->delete();
-        return redirect()->route('admin.action.supplier.index', $id)->with('success', 'Deleted successfully!' );
+        return redirect()->route('admin.action.supplier.index', $id)->with('success', 'Xóa thành công!' );
     }
 }

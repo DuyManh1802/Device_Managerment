@@ -86,7 +86,6 @@
             });
         });
 
-
         Route::prefix('devicedetail')->group(function(){
             Route::get('/listBroken', [deviceDetailController::class, 'listBroken'])->name('admin.devicedetail.listBroken');
             Route::get('/fixed', [deviceDetailController::class, 'fixed'])->middleware('can:isAdmin')->name('admin.devicedetail.fixed');
@@ -124,5 +123,4 @@
     Auth::routes();
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 ?>

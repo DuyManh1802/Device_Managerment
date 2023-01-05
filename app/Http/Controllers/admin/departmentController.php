@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\DB;
 
 class departmentController extends Controller
 {
-    // status =0 thì hỏng
-    // status =1 thì dùng được
-    // status =2 thì sửa chữa
+    // status =0 hỏng
+    // status =1 dùng bthg
+    // status =2 da sửa chữa xong
     public function index(){
         $departments = department::all();
         return view('admin.action.department.list', compact('departments'));
@@ -29,8 +29,6 @@ class departmentController extends Controller
     }
 
     public function store(Request $request){
-
-
         $this->validate($request,
             [
                 'name' =>'required',
@@ -43,9 +41,8 @@ class departmentController extends Controller
             'name' =>$request->name,
             'manager' =>$request->manager,
             'address' =>$request->address,
-
         ]);
-        return redirect()->route('admin.action.department.index')->with('success', 'Created successfully!' );
+        return redirect()->route('admin.action.department.index')->with('success', 'Thêm mới thành công!' );
     }
     public function edit($id){
         $departments = department::find($id);
@@ -66,12 +63,11 @@ class departmentController extends Controller
             'address' =>$request->address,
 
         ]);
-        return redirect()->route('admin.action.department.index', $id)->with('success', 'Edited successfully!' );
-
+        return redirect()->route('admin.action.department.index', $id)->with('success', 'Sửa thành công!' );
     }
     public function delete($id){
         department::where('id', $id)->delete();
-        return redirect()->route('admin.action.department.index', $id)->with('success', 'Deleted successfully!' );
+        return redirect()->route('admin.action.department.index', $id)->with('success', 'Xóa thành công!' );
     }
 
     // function formAddDevice($id){
@@ -82,7 +78,7 @@ class departmentController extends Controller
     function formAddDevice(){
         $devices = device::all();
         $departments = department::all();
-        $array =  [];
+        $array = [];
         foreach ($departments as $key => $value) {
             $array[$key] = $value;
         }
@@ -113,12 +109,7 @@ class departmentController extends Controller
     function addDevice(Request $request){
         try{
             $device_id = $request->device_id;
-
-            // $data = $request->only(['department_used','amount_used','status']);
-
-            /// lấy bản ghi có depat=
             $item = devicedetail::where(['department_id' => $request->department, 'device_id' => $device_id])->first();
-
             $data = [
                 'status' => 1,
             ];
@@ -129,14 +120,12 @@ class departmentController extends Controller
              $department->devices()->detach([$device_id]); // xóa
             $department->devices()->attach($device_id, $data); // thêm
             DB::commit();
-            return redirect()->route('admin.department.listDepartment')->with('success', 'Created successfully!' );
+            return redirect()->route('admin.department.listDepartment')->with('success', 'Thêm thiết bị thành công!' );
         }catch(\Exception $ex){
             dd($ex);
             DB::rollBack();
             return back()->with('notification_error', 'Lỗi !!! ');
         }
-
-
     }
 
     public function listDepartment(){
@@ -155,9 +144,7 @@ class departmentController extends Controller
 
             $department->devices()->detach([$id]);
             DB::commit();
-            return redirect()->back()->with('success', 'Deleted successfully!' );
-
-
+            return redirect()->back()->with('success', 'Trả thành công' );
         }catch(\Exception $ex){
             DB::rollBack();
             return redirect()->back()->with('notification_error', 'Lỗi !!! ');
@@ -166,18 +153,13 @@ class departmentController extends Controller
 
     public function updateStatusDevice($id, $department){
         try{
-
             DB::beginTransaction();
-
             $item = devicedetail::where(['department_id' => $department, 'device_id' => $id])->first();
-
             $item->status = 0;
             // $item->amount_used == $item->amount_used - 1;
             $item->save();
             DB::commit();
             return redirect()->back()->with('success', 'Upleted successfully!' );
-
-
         }catch(\Exception $ex){
             dd($ex);
             DB::rollBack();
@@ -187,23 +169,16 @@ class departmentController extends Controller
 
     public function fixed($id, $department){
         try{
-
             DB::beginTransaction();
-
             $item = devicedetail::where(['department_id' => $department, 'device_id' => $id])->first();
-
             $item->status = 2;
             $item->save();
             DB::commit();
             return redirect()->back()->with('success', 'Upleted successfully!' );
-
-
         }catch(\Exception $ex){
             dd($ex);
             DB::rollBack();
             return redirect()->back()->with('notification_error', 'Lỗi !!! ');
         }
     }
-
-
 }
