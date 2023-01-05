@@ -24,7 +24,6 @@ class departmentController extends Controller
 
     function show($id){
         $department = department::find($id);
-        // $devices = $department->devices()->where('status', 1)->get();
         $devices = $department->devices()->get();
         return view('admin.action.department.show', ['department'=>$department, 'devices'=> $devices]);
     }

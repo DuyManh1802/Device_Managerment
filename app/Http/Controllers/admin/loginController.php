@@ -26,7 +26,7 @@ class loginController extends Controller
         Auth::logout();
         return redirect()->route('admin.login.index');
     }
-
+/// su dung laravel https://laravel.com/docs/7.x/authentication de login
     public function profile(){
         return view('admin.login.profile');
     }
@@ -52,7 +52,7 @@ class loginController extends Controller
     public function showFormRegister(){
         return view('admin.login.register');
     }
-    
+
     public function register(Request $request){
         $this->validate($request,
             [
@@ -65,7 +65,7 @@ class loginController extends Controller
         User::create([
             'name' =>$request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password), 
+            'password' => bcrypt($request->password),
         ]);
         return redirect()->route('admin.login.index')->with('success', 'Đăng ký thành công' );
     }

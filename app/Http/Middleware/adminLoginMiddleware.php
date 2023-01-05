@@ -16,16 +16,16 @@ class adminLoginMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
+
     public function handle(Request $request, Closure $next)
     {
         if(Auth::check()){
-            if(Auth::user()->is_admin){
+            if(Auth::user()){
                 return $next($request);
             }
             Auth::logout();
             return redirect()->route('admin.login.index')->with('error', 'Permission denied');
         }
         return redirect()->route('admin.login.index')->with('error', 'Permission denied');
-
     }
 }

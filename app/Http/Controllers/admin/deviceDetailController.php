@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\department;
 use Illuminate\Http\Request;
 use App\Models\devicedetail;
 use App\Models\device;
@@ -11,11 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class deviceDetailController extends Controller
 {
-
-    // public function edit($device_id, $department_id){
-    //     $devicedetails = devicedetail::find($device_id, $department_id);
-    //     return view('admin.action.devicedetail.edit', compact('devicedetails'));
-    // }
 
     public function update(Request $request, $device_id, $department_id){
         $this->validate($request,
@@ -28,7 +24,6 @@ class deviceDetailController extends Controller
 
         devicedetail::where('device_id', 'device_id', $device_id, $department_id)->update([
             'status' =>$request->status,
-
         ]);
         return redirect()->route('admin.action.department.show')->with('success', 'Edited successfully!' );
 
@@ -39,13 +34,18 @@ class deviceDetailController extends Controller
     }
 
     public function listBroken(){
-        $ids  = DB::table('devicedetail')
-        ->join('device', 'device.id', '=', 'devicedetail.device_id')->join('department', 'department.id', '=', 'devicedetail.department_id')
-        ->where('devicedetail.status','=', 0)->get();
-        $devices = $ids;
-
-        // $time = DB::table('devicedetail')->where('status', '=', 0)->get('update_at');
+        $devices = DB::table('devicedetail')
+        ->join('department', 'department.id', '=', 'devicedetail.department_id')
+        ->join('device', 'device.id', '=', 'devicedetail.device_id')
+        ->where('devicedetail.status','=', 0)->select('devicedetail.updated_at', 'device.name', 'device.image', 'device.configuration')->get();
         return view('admin.devicedetail.listBroken', [ 'devices' => $devices]);
+    }
+
+    public function listFixed(){
+        $devices = DB::table('devicedetail')
+        ->join('device', 'device.id', '=', 'devicedetail.device_id')
+        ->where('devicedetail.status','=', 2)->select('devicedetail.updated_at', 'device.name', 'device.image', 'device.configuration')->get();
+        return view('admin.devicedetail.listFixed', [ 'devices' => $devices]);
     }
 
     public function fixed(){
@@ -57,7 +57,7 @@ class deviceDetailController extends Controller
             $device->status = 2;
             $device->save();
             DB::commit();
-            return redirect()->back()->with('success', 'Upleted successfully!' );
+            return redirect()->back()->with('success', 'Updated successfully!' );
 
 
         }catch(\Exception $ex){
@@ -66,17 +66,5 @@ class deviceDetailController extends Controller
             return redirect()->back()->with('notification_error', 'Lỗi !!! ');
         }
     }
-
-    public function listFixed(){
-        $devices = DB::table('devicedetail')
-        ->join('device', 'device.id', '=', 'devicedetail.device_id')
-        ->where('devicedetail.status','=', 2)->get();
-        return view('admin.devicedetail.listFixed', [ 'devices' => $devices]);
-
-    }
-
-    //ids = deparent_device::where(deparent_id, $id)->where('status' ,0)->get()->pluck('device_id')->toArray(); [1,2,33];
-        // all = device::whereIn('id', ids)->get()
-
 
 }
